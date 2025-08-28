@@ -13,6 +13,9 @@ namespace TestApi.Services
         Task<DirectorDto> CrearDirector(CrearDirectorDto crearDirectorDto);
         Task<IEnumerable<DirectorDto>> ObtenerDirectores();
         Task<DirectorDto> ObtenerDirectorPorId(int id);
+        Task<DirectorPeliculaDto> AgregarDirectorPelicula(DirectorPeliculaDto directorPeliculaDto);
+        Task<bool> BorrarDirectorPelicula(int idDirector, int idPelicula);
+
     }
 
     public class DirectorService : IDirectorService
@@ -67,6 +70,29 @@ namespace TestApi.Services
             director.FechaNacimiento = crearDirectorDto.FechaNacimiento;
 
             context.Directores.Update(director);
+            await context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<DirectorPeliculaDto> AgregarDirectorPelicula(DirectorPeliculaDto directorPeliculaDto)
+        {
+            var directorPelicula = mapper.Map<DirectorPelicula>(directorPeliculaDto);
+
+            context.Add(directorPelicula);
+            await context.SaveChangesAsync();
+            return directorPeliculaDto;
+        }
+
+        public async Task<bool> BorrarDirectorPelicula(int idDirector, int idPelicula)
+        {
+            var directorPelicula = await context.DirectorPeliculas.Where(x => x.IdDirector == idDirector).FirstOrDefaultAsync(x => x.IdPelicula == idPelicula);
+
+            if (directorPelicula is null)
+            {
+                return false;
+            }
+
+            context.DirectorPeliculas.Remove(directorPelicula);
             await context.SaveChangesAsync();
             return true;
         }

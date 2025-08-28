@@ -57,6 +57,40 @@ namespace TestApi.Controllers
             }
         }
 
+        [HttpPost("director-pelicula")]
+        public async Task<ActionResult> Put(DirectorPeliculaDto directorPeliculaDto)
+        {
+            try
+            {
+                var result = await directorService.AgregarDirectorPelicula(directorPeliculaDto);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("actor-pelicula/{idDirector:int}/{idPelicula:int}")]
+        public async Task<ActionResult> Delete(int idDirector, int idPelicula)
+        {
+            try
+            {
+                var result = await directorService.BorrarDirectorPelicula(idDirector, idPelicula);
+
+                if (!result)
+                {
+                    return NotFound();
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
+        }
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, CrearDirectorDto crearDirectorDto)
         {
