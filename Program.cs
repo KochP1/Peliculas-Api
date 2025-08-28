@@ -27,5 +27,3 @@ app.UseSwaggerUI();
 
 app.MapControllers();
 app.Run();
-
-// dotnet ef dbcontext scaffold "Server=DESKTOP-S5Q2S88; Database=Peliculas; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models --context-dir Data --context ApplicationDbContext --force
