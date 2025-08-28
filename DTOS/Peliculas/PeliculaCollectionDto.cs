@@ -17,6 +17,6 @@ namespace TestApi.DTOS
         public decimal Presupuesto { get; set; }
         public List<ActorDto> Actores { get; set; } = [];
         public List<DirectorDto> Directores { get; set; } = [];
-        public List<Generos> Generos { get; set; } = [];
+        public List<GeneroDto> Generos { get; set; } = [];
     }
 }
