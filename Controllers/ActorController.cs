@@ -21,8 +21,22 @@ namespace TestApi.Controllers
         {
             try
             {
-                var actores = await actorService.ObtenerAutores();
+                var actores = await actorService.ObtenerActores();
                 return Ok(actores);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            try
+            {
+                var actor = await actorService.ObtenerActorPorId(id);
+                return Ok(actor);
             }
             catch (Exception ex)
             {

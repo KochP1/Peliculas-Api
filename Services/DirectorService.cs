@@ -12,6 +12,7 @@ namespace TestApi.Services
         Task<bool> BorrarDirector(int id);
         Task<DirectorDto> CrearDirector(CrearDirectorDto crearDirectorDto);
         Task<IEnumerable<DirectorDto>> ObtenerDirectores();
+        Task<DirectorDto> ObtenerDirectorPorId(int id);
     }
 
     public class DirectorService : IDirectorService
@@ -31,6 +32,13 @@ namespace TestApi.Services
             var directores = await context.Directores.OrderBy(x => x.Nombres).ToListAsync();
             var directoresDto = mapper.Map<IEnumerable<DirectorDto>>(directores);
             return directoresDto;
+        }
+
+        public async Task<DirectorDto> ObtenerDirectorPorId(int id)
+        {
+            var director = await context.Directores.FirstOrDefaultAsync(x => x.Id == id);
+            var directorDto = mapper.Map<DirectorDto>(director);
+            return directorDto;
         }
 
         public async Task<DirectorDto> CrearDirector(CrearDirectorDto crearDirectorDto)

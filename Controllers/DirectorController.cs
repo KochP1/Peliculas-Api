@@ -29,6 +29,20 @@ namespace TestApi.Controllers
             }
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            try
+            {
+                var director = await directorService.ObtenerDirectorPorId(id);
+                return Ok(director);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post(CrearDirectorDto crearDirectorDto)
         {

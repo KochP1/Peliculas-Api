@@ -12,6 +12,7 @@ namespace TestApi.Services
         Task<bool> BorrarGenero(int id);
         Task<GeneroDto> CrearGenero(CrearGeneroDto crearGeneroDto);
         Task<IEnumerable<GeneroDto>> ObtenerGeneros();
+        Task<GeneroDto> ObtenerGeneroPorId(int id);
     }
 
     public class GeneroService : IGeneroService
@@ -31,6 +32,13 @@ namespace TestApi.Services
 
             var generosDto = mapper.Map<IEnumerable<GeneroDto>>(generos);
             return generosDto;
+        }
+
+        public async Task<GeneroDto> ObtenerGeneroPorId(int id)
+        {
+            var genero = await context.Generos.FirstOrDefaultAsync(x => x.Id == id);
+            var generoDto = mapper.Map<GeneroDto>(genero);
+            return generoDto;
         }
 
         public async Task<GeneroDto> CrearGenero(CrearGeneroDto crearGeneroDto)

@@ -11,7 +11,8 @@ namespace TestApi.Services
         Task<bool> ActualizarActor(int id, CrearActorDto crearActorDto);
         Task<bool> BorrarActor(int id);
         Task<ActorDto> CrearActor(CrearActorDto crearActorDto);
-        Task<IEnumerable<ActorDto>> ObtenerAutores();
+        Task<IEnumerable<ActorDto>> ObtenerActores();
+        Task<ActorDto> ObtenerActorPorId(int id);
     }
 
     public class ActorService : IActorService
@@ -25,12 +26,21 @@ namespace TestApi.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<ActorDto>> ObtenerAutores()
+        public async Task<IEnumerable<ActorDto>> ObtenerActores()
         {
             var actores = await context.Actores.OrderBy(x => x.Nombres).ToListAsync();
 
             var actoresDto = mapper.Map<IEnumerable<ActorDto>>(actores);
             return actoresDto;
+        }
+
+        public async Task<ActorDto> ObtenerActorPorId(int id)
+        {
+            var actor = await context.Actores.
+            FirstOrDefaultAsync(x => x.Id == id);
+
+            var actorDto = mapper.Map<ActorDto>(actor);
+            return actorDto;
         }
 
         public async Task<ActorDto> CrearActor(CrearActorDto crearActorDto)
