@@ -12,6 +12,7 @@ namespace TestApi.Services
         Task<PeliculaCollectionDto> ObtenerPeliculasPorId(int id);
         Task<PeliculaDto> CrearPelicula(CrearPeliculaDto crearPeliculaDto);
         Task<bool> BorrarPelicula(int id);
+        Task<bool> ActualizarPelicula(int id, PutPeliculaDto putPeliculaDto);
     }
 
     public class PeliculaService : IPeliculaService
@@ -73,6 +74,26 @@ namespace TestApi.Services
             await context.SaveChangesAsync();
             var peliculaDto = mapper.Map<PeliculaDto>(pelicula);
             return peliculaDto;
+        }
+
+        public async Task<bool> ActualizarPelicula(int id, PutPeliculaDto putPeliculaDto)
+        {
+            var pelicula = await context.Peliculas.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (pelicula is null)
+            {
+                return false;
+            }
+
+            pelicula.Nombre = putPeliculaDto.Nombre;
+            pelicula.FechaSalida = putPeliculaDto.FechaSalida;
+            pelicula.Estudio = putPeliculaDto.Estudio;
+            pelicula.BoxOffice = putPeliculaDto.BoxOffice;
+            pelicula.Presupuesto = putPeliculaDto.Presupuesto;
+
+            context.Update(pelicula);
+            await context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> BorrarPelicula(int id)

@@ -43,6 +43,26 @@ namespace TestApi.Controllers
             }
         }
 
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Delete(int id, PutPeliculaDto putPeliculaDto)
+        {
+            try
+            {
+                var result = await peliculaService.ActualizarPelicula(id, putPeliculaDto);
+
+                if (!result)
+                {
+                    return NotFound();
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -64,22 +84,3 @@ namespace TestApi.Controllers
         }
     }
 }
-
-/*
-{
-  "nombre": "Avengers Infinity War",
-  "fechaSalida": "2025-08-28",
-  "estudio": "Marvel",
-  "boxOffice": 1000000000,
-  "presupuesto": 500000000,
-  "actores": [
-    1, 4
-  ],
-  "directores": [
-    1
-  ],
-  "generos": [
-    1, 2
-  ]
-}
-*/
