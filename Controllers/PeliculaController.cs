@@ -25,8 +25,20 @@ namespace TestApi.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var pelicula = await peliculaService.ObtenerPeliculasPorId(id);
-            return Ok(pelicula);
+            try
+            {
+                var pelicula = await peliculaService.ObtenerPeliculasPorId(id);
+
+                if (pelicula is null)
+                {
+                    return NotFound();
+                }
+                return Ok(pelicula);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
         }
 
         [HttpPost]
