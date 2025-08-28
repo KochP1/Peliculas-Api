@@ -15,6 +15,10 @@ namespace TestApi.Utilities
             // DIRECTORES
             CreateMap<Directores, DirectorDto>().ReverseMap();
             CreateMap<CrearDirectorDto, Directores>().ReverseMap();
+
+            // GENEROS
+            CreateMap<Generos, GeneroDto>().ReverseMap();
+            CreateMap<CrearGeneroDto, Generos>().ReverseMap();
         }
     }
 }
