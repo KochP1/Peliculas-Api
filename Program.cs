@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddScoped<IDirectorService, DirectorService>();
+builder.Services.AddScoped<IGeneroService, GeneroService>();
 
 builder.Services.AddSwaggerGen();
 
