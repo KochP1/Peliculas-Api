@@ -13,6 +13,8 @@ namespace TestApi.Services
         Task<ActorDto> CrearActor(CrearActorDto crearActorDto);
         Task<IEnumerable<ActorDto>> ObtenerActores();
         Task<ActorDto> ObtenerActorPorId(int id);
+        Task<bool> BorrarActorPelicula(int idActor, int idPelicula);
+        Task<ActorPeliculaDto> AgregarActorPelicula(ActorPeliculaDto actorPeliculaDto);
     }
 
     public class ActorService : IActorService
@@ -69,6 +71,29 @@ namespace TestApi.Services
             actor.FechaNacimiento = crearActorDto.FechaNacimiento;
 
             context.Actores.Update(actor);
+            await context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<ActorPeliculaDto> AgregarActorPelicula(ActorPeliculaDto actorPeliculaDto)
+        {
+            var actorPelicula = mapper.Map<ActorPelicula>(actorPeliculaDto);
+
+            context.Add(actorPelicula);
+            await context.SaveChangesAsync();
+            return actorPeliculaDto;
+        }
+
+        public async Task<bool> BorrarActorPelicula(int idActor, int idPelicula)
+        {
+            var actorPelicula = await context.ActorPeliculas.Where(x => x.IdActor == idActor).FirstOrDefaultAsync(x => x.IdPelicula == idPelicula);
+
+            if (actorPelicula is null)
+            {
+                return false;
+            }
+
+            context.ActorPeliculas.Remove(actorPelicula);
             await context.SaveChangesAsync();
             return true;
         }

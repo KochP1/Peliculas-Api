@@ -12,16 +12,19 @@ namespace TestApi.Utilities
             CreateMap<Actores, ActorDto>().ReverseMap();
             CreateMap<CrearActorDto, Actores>().ReverseMap();
             CreateMap<ActorDto, ActorPelicula>().ReverseMap();
+            CreateMap<ActorPeliculaDto, ActorPelicula>().ReverseMap();
 
             // DIRECTORES
             CreateMap<Directores, DirectorDto>().ReverseMap();
             CreateMap<CrearDirectorDto, Directores>().ReverseMap();
             CreateMap<DirectorDto, DirectorPelicula>().ReverseMap();
+            CreateMap<DirectorPeliculaDto, DirectorPeliculaDto>().ReverseMap();
 
             // GENEROS
             CreateMap<Generos, GeneroDto>().ReverseMap();
             CreateMap<CrearGeneroDto, Generos>().ReverseMap();
             CreateMap<GeneroDto, GeneroPelicula>().ReverseMap();
+            CreateMap<GeneroPeliculaDto, GeneroPelicula>().ReverseMap();
 
             // PELICULAS
             CreateMap<Peliculas, PeliculaDto>().ReverseMap();
