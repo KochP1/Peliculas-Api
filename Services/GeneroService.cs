@@ -13,6 +13,8 @@ namespace TestApi.Services
         Task<GeneroDto> CrearGenero(CrearGeneroDto crearGeneroDto);
         Task<IEnumerable<GeneroDto>> ObtenerGeneros();
         Task<GeneroDto> ObtenerGeneroPorId(int id);
+        Task<GeneroPeliculaDto> AgregarGeneroPelicula(GeneroPeliculaDto generoPeliculaDto);
+        Task<bool> BorrarGeneroPelicula(int idGenero, int idPelicula);
     }
 
     public class GeneroService : IGeneroService
@@ -64,6 +66,29 @@ namespace TestApi.Services
             genero.Genero1 = crearGeneroDto.Genero1;
 
             context.Generos.Update(genero);
+            await context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<GeneroPeliculaDto> AgregarGeneroPelicula(GeneroPeliculaDto generoPeliculaDto)
+        {
+            var generoPelicula = mapper.Map<GeneroPelicula>(generoPeliculaDto);
+
+            context.Add(generoPelicula);
+            await context.SaveChangesAsync();
+            return generoPeliculaDto;
+        }
+
+        public async Task<bool> BorrarGeneroPelicula(int idGenero, int idPelicula)
+        {
+            var generoPelicula = await context.GeneroPeliculas.Where(x => x.IdGenero == idGenero).FirstOrDefaultAsync(x => x.IdPelicula == idPelicula);
+
+            if (generoPelicula is null)
+            {
+                return false;
+            }
+
+            context.GeneroPeliculas.Remove(generoPelicula);
             await context.SaveChangesAsync();
             return true;
         }

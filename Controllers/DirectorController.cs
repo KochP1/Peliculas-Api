@@ -71,7 +71,7 @@ namespace TestApi.Controllers
             }
         }
 
-        [HttpDelete("actor-pelicula/{idDirector:int}/{idPelicula:int}")]
+        [HttpDelete("director-pelicula/{idDirector:int}/{idPelicula:int}")]
         public async Task<ActionResult> Delete(int idDirector, int idPelicula)
         {
             try

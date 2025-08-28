@@ -57,6 +57,40 @@ namespace TestApi.Controllers
             }
         }
 
+        [HttpPost("genero-pelicula")]
+        public async Task<ActionResult> Put(GeneroPeliculaDto generoPeliculaDto)
+        {
+            try
+            {
+                var result = await generoService.AgregarGeneroPelicula(generoPeliculaDto);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("genero-pelicula/{idGenero:int}/{idPelicula:int}")]
+        public async Task<ActionResult> Delete(int idGenero, int idPelicula)
+        {
+            try
+            {
+                var result = await generoService.BorrarGeneroPelicula(idGenero, idPelicula);
+
+                if (!result)
+                {
+                    return NotFound();
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error: {ex.Message}");
+            }
+        }
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, CrearGeneroDto crearGeneroDto)
         {
