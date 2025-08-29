@@ -36,6 +36,12 @@ namespace TestApi.Controllers
             try
             {
                 var actor = await actorService.ObtenerActorPorId(id);
+
+                if (actor is null)
+                {
+                    return NotFound();
+                }
+                
                 return Ok(actor);
             }
             catch (Exception ex)

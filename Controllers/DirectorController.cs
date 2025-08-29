@@ -35,6 +35,11 @@ namespace TestApi.Controllers
             try
             {
                 var director = await directorService.ObtenerDirectorPorId(id);
+
+                if (director is null)
+                {
+                    return NotFound();
+                }
                 return Ok(director);
             }
             catch (Exception ex)

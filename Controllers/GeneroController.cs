@@ -35,6 +35,12 @@ namespace TestApi.Controllers
             try
             {
                 var genero = await generoService.ObtenerGeneroPorId(id);
+
+                if (genero is null)
+                {
+                    return NotFound();
+                }
+                
                 return Ok(genero);
             }
             catch (Exception ex)

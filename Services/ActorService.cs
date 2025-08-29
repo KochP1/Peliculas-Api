@@ -43,9 +43,6 @@ namespace TestApi.Services
                     .ThenInclude(ap => ap.IdPeliculaNavigation)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
-            if (actor == null)
-                throw new Exception("Actor no encontrado");
-
             return mapper.Map<ActorConPeliculasDto>(actor);
         }
 
