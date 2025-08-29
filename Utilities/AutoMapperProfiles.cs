@@ -13,6 +13,7 @@ namespace TestApi.Utilities
             CreateMap<CrearActorDto, Actores>().ReverseMap();
             CreateMap<ActorDto, ActorPelicula>().ReverseMap();
             CreateMap<ActorPeliculaDto, ActorPelicula>().ReverseMap();
+            CreateMap<ActorPeliculaShowDto, ActorPelicula>().ReverseMap();
             CreateMap<Actores, ActorConPeliculasDto>()
                 .ForMember(dest => dest.Peliculas, opt => opt.MapFrom(src => 
                     src.ActorPeliculas.Select(ap => ap.IdPeliculaNavigation)));
@@ -22,6 +23,7 @@ namespace TestApi.Utilities
             CreateMap<CrearDirectorDto, Directores>().ReverseMap();
             CreateMap<DirectorDto, DirectorPelicula>().ReverseMap();
             CreateMap<DirectorPeliculaDto, DirectorPelicula>().ReverseMap();
+            CreateMap<DirectorPeliculaShowDto, DirectorPelicula>().ReverseMap();
             CreateMap<Directores, DirectorConPeliculaDto>()
                 .ForMember(dest => dest.Peliculas, opt => opt.MapFrom(src => 
                     src.DirectorPeliculas.Select(ap => ap.IdPeliculaNavigation)));
@@ -31,6 +33,7 @@ namespace TestApi.Utilities
             CreateMap<CrearGeneroDto, Generos>().ReverseMap();
             CreateMap<GeneroDto, GeneroPelicula>().ReverseMap();
             CreateMap<GeneroPeliculaDto, GeneroPelicula>().ReverseMap();
+            CreateMap<GeneroPeliculaShowDto, GeneroPelicula>().ReverseMap();
 
             // PELICULAS
             CreateMap<Peliculas, PeliculaDto>().ReverseMap();

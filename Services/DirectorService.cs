@@ -13,7 +13,7 @@ namespace TestApi.Services
         Task<DirectorDto> CrearDirector(CrearDirectorDto crearDirectorDto);
         Task<IEnumerable<DirectorDto>> ObtenerDirectores();
         Task<DirectorConPeliculaDto> ObtenerDirectorPorId(int id);
-        Task<DirectorPeliculaDto> AgregarDirectorPelicula(DirectorPeliculaDto directorPeliculaDto);
+        Task<DirectorPeliculaShowDto> AgregarDirectorPelicula(DirectorPeliculaDto directorPeliculaDto);
         Task<bool> BorrarDirectorPelicula(int id);
 
     }
@@ -78,13 +78,15 @@ namespace TestApi.Services
             return true;
         }
 
-        public async Task<DirectorPeliculaDto> AgregarDirectorPelicula(DirectorPeliculaDto directorPeliculaDto)
+        public async Task<DirectorPeliculaShowDto> AgregarDirectorPelicula(DirectorPeliculaDto directorPeliculaDto)
         {
             var directorPelicula = mapper.Map<DirectorPelicula>(directorPeliculaDto);
 
             context.Add(directorPelicula);
             await context.SaveChangesAsync();
-            return directorPeliculaDto;
+
+            var directorDto = mapper.Map<DirectorPeliculaShowDto>(directorPelicula);
+            return directorDto;
         }
 
         public async Task<bool> BorrarDirectorPelicula(int id)

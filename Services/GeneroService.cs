@@ -13,7 +13,7 @@ namespace TestApi.Services
         Task<GeneroDto> CrearGenero(CrearGeneroDto crearGeneroDto);
         Task<IEnumerable<GeneroDto>> ObtenerGeneros();
         Task<GeneroDto> ObtenerGeneroPorId(int id);
-        Task<GeneroPeliculaDto> AgregarGeneroPelicula(GeneroPeliculaDto generoPeliculaDto);
+        Task<GeneroPeliculaShowDto> AgregarGeneroPelicula(GeneroPeliculaDto generoPeliculaDto);
         Task<bool> BorrarGeneroPelicula(int id);
     }
 
@@ -70,13 +70,15 @@ namespace TestApi.Services
             return true;
         }
 
-        public async Task<GeneroPeliculaDto> AgregarGeneroPelicula(GeneroPeliculaDto generoPeliculaDto)
+        public async Task<GeneroPeliculaShowDto> AgregarGeneroPelicula(GeneroPeliculaDto generoPeliculaDto)
         {
             var generoPelicula = mapper.Map<GeneroPelicula>(generoPeliculaDto);
 
             context.Add(generoPelicula);
             await context.SaveChangesAsync();
-            return generoPeliculaDto;
+
+            var generoDto = mapper.Map<GeneroPeliculaShowDto>(generoPelicula);
+            return generoDto;
         }
 
         public async Task<bool> BorrarGeneroPelicula(int id)

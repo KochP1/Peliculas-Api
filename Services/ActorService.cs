@@ -14,7 +14,7 @@ namespace TestApi.Services
         Task<IEnumerable<ActorDto>> ObtenerActores();
         Task<ActorConPeliculasDto> ObtenerActorPorId(int id);
         Task<bool> BorrarActorPelicula(int id);
-        Task<ActorPeliculaDto> AgregarActorPelicula(ActorPeliculaDto actorPeliculaDto);
+        Task<ActorPeliculaShowDto> AgregarActorPelicula(ActorPeliculaDto actorPeliculaDto);
     }
 
     public class ActorService : IActorService
@@ -76,13 +76,15 @@ namespace TestApi.Services
             return true;
         }
 
-        public async Task<ActorPeliculaDto> AgregarActorPelicula(ActorPeliculaDto actorPeliculaDto)
+        public async Task<ActorPeliculaShowDto> AgregarActorPelicula(ActorPeliculaDto actorPeliculaDto)
         {
             var actorPelicula = mapper.Map<ActorPelicula>(actorPeliculaDto);
 
             context.Add(actorPelicula);
             await context.SaveChangesAsync();
-            return actorPeliculaDto;
+
+            var actordto = mapper.Map<ActorPeliculaShowDto>(actorPelicula);
+            return actordto;
         }
 
         public async Task<bool> BorrarActorPelicula(int id)
