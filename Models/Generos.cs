@@ -9,5 +9,5 @@ public partial class Generos
 
     public string Genero1 { get; set; } = null!;
 
-    public virtual GeneroPelicula? GeneroPelicula { get; set; }
+    public virtual ICollection<GeneroPelicula> GeneroPeliculas { get; set; } = new List<GeneroPelicula>();
 }

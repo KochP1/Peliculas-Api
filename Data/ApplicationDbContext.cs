@@ -32,20 +32,16 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-S5Q2S88; Database=Peliculas; Trusted_Connection=True; TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-M4IK36Q; Database=Peliculas; Trusted_Connection=True; TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ActorPelicula>(entity =>
         {
-            entity.HasKey(e => e.IdActor);
-
             entity.ToTable("ActorPelicula");
 
-            entity.Property(e => e.IdActor).ValueGeneratedNever();
-
-            entity.HasOne(d => d.IdActorNavigation).WithOne(p => p.ActorPelicula)
-                .HasForeignKey<ActorPelicula>(d => d.IdActor)
+            entity.HasOne(d => d.IdActorNavigation).WithMany(p => p.ActorPeliculas)
+                .HasForeignKey(d => d.IdActor)
                 .HasConstraintName("FK_ActorPelicula_Actores");
 
             entity.HasOne(d => d.IdPeliculaNavigation).WithMany(p => p.ActorPeliculas)
@@ -61,14 +57,10 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<DirectorPelicula>(entity =>
         {
-            entity.HasKey(e => e.IdDirector);
-
             entity.ToTable("DirectorPelicula");
 
-            entity.Property(e => e.IdDirector).ValueGeneratedNever();
-
-            entity.HasOne(d => d.IdDirectorNavigation).WithOne(p => p.DirectorPelicula)
-                .HasForeignKey<DirectorPelicula>(d => d.IdDirector)
+            entity.HasOne(d => d.IdDirectorNavigation).WithMany(p => p.DirectorPeliculas)
+                .HasForeignKey(d => d.IdDirector)
                 .HasConstraintName("FK_DirectorPelicula_Directores");
 
             entity.HasOne(d => d.IdPeliculaNavigation).WithMany(p => p.DirectorPeliculas)
@@ -91,14 +83,10 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<GeneroPelicula>(entity =>
         {
-            entity.HasKey(e => e.IdGenero);
-
             entity.ToTable("GeneroPelicula");
 
-            entity.Property(e => e.IdGenero).ValueGeneratedNever();
-
-            entity.HasOne(d => d.IdGeneroNavigation).WithOne(p => p.GeneroPelicula)
-                .HasForeignKey<GeneroPelicula>(d => d.IdGenero)
+            entity.HasOne(d => d.IdGeneroNavigation).WithMany(p => p.GeneroPeliculas)
+                .HasForeignKey(d => d.IdGenero)
                 .HasConstraintName("FK_GeneroPelicula_Generos");
 
             entity.HasOne(d => d.IdPeliculaNavigation).WithMany(p => p.GeneroPeliculas)
@@ -110,7 +98,7 @@ public partial class ApplicationDbContext : DbContext
         {
             entity.Property(e => e.BoxOffice).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Estudio).HasMaxLength(30);
-            entity.Property(e => e.Nombre).HasMaxLength(30);
+            entity.Property(e => e.Nombre).HasMaxLength(70);
             entity.Property(e => e.Presupuesto).HasColumnType("decimal(18, 0)");
         });
 

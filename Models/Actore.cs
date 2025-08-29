@@ -15,5 +15,5 @@ public partial class Actores
 
     public DateOnly FechaNacimiento { get; set; }
 
-    public virtual ActorPelicula? ActorPelicula { get; set; }
+    public virtual ICollection<ActorPelicula> ActorPeliculas { get; set; } = new List<ActorPelicula>();
 }

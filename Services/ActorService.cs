@@ -12,7 +12,7 @@ namespace TestApi.Services
         Task<bool> BorrarActor(int id);
         Task<ActorDto> CrearActor(CrearActorDto crearActorDto);
         Task<IEnumerable<ActorDto>> ObtenerActores();
-        Task<ActorDto> ObtenerActorPorId(int id);
+        Task<ActorConPeliculasDto> ObtenerActorPorId(int id);
         Task<bool> BorrarActorPelicula(int idActor, int idPelicula);
         Task<ActorPeliculaDto> AgregarActorPelicula(ActorPeliculaDto actorPeliculaDto);
     }
@@ -36,13 +36,17 @@ namespace TestApi.Services
             return actoresDto;
         }
 
-        public async Task<ActorDto> ObtenerActorPorId(int id)
+        public async Task<ActorConPeliculasDto> ObtenerActorPorId(int id)
         {
-            var actor = await context.Actores.
-            FirstOrDefaultAsync(x => x.Id == id);
+            var actor = await context.Actores
+                .Include(a => a.ActorPeliculas)
+                    .ThenInclude(ap => ap.IdPeliculaNavigation)
+                .FirstOrDefaultAsync(a => a.Id == id);
 
-            var actorDto = mapper.Map<ActorDto>(actor);
-            return actorDto;
+            if (actor == null)
+                throw new Exception("Actor no encontrado");
+
+            return mapper.Map<ActorConPeliculasDto>(actor);
         }
 
         public async Task<ActorDto> CrearActor(CrearActorDto crearActorDto)

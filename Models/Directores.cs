@@ -15,5 +15,5 @@ public partial class Directores
 
     public DateOnly FechaNacimiento { get; set; }
 
-    public virtual DirectorPelicula? DirectorPelicula { get; set; }
+    public virtual ICollection<DirectorPelicula> DirectorPeliculas { get; set; } = new List<DirectorPelicula>();
 }

@@ -5,6 +5,8 @@ namespace TestApi.Models;
 
 public partial class DirectorPelicula
 {
+    public int Id { get; set; }
+
     public int IdDirector { get; set; }
 
     public int IdPelicula { get; set; }

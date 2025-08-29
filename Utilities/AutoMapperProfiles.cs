@@ -13,6 +13,9 @@ namespace TestApi.Utilities
             CreateMap<CrearActorDto, Actores>().ReverseMap();
             CreateMap<ActorDto, ActorPelicula>().ReverseMap();
             CreateMap<ActorPeliculaDto, ActorPelicula>().ReverseMap();
+            CreateMap<Actores, ActorConPeliculasDto>()
+                .ForMember(dest => dest.Peliculas, opt => opt.MapFrom(src => 
+                    src.ActorPeliculas.Select(ap => ap.IdPeliculaNavigation)));
 
             // DIRECTORES
             CreateMap<Directores, DirectorDto>().ReverseMap();
