@@ -14,7 +14,7 @@ namespace TestApi.Services
         Task<IEnumerable<DirectorDto>> ObtenerDirectores();
         Task<DirectorConPeliculaDto> ObtenerDirectorPorId(int id);
         Task<DirectorPeliculaDto> AgregarDirectorPelicula(DirectorPeliculaDto directorPeliculaDto);
-        Task<bool> BorrarDirectorPelicula(int idDirector, int idPelicula);
+        Task<bool> BorrarDirectorPelicula(int id);
 
     }
 
@@ -87,9 +87,9 @@ namespace TestApi.Services
             return directorPeliculaDto;
         }
 
-        public async Task<bool> BorrarDirectorPelicula(int idDirector, int idPelicula)
+        public async Task<bool> BorrarDirectorPelicula(int id)
         {
-            var directorPelicula = await context.DirectorPeliculas.Where(x => x.IdDirector == idDirector).FirstOrDefaultAsync(x => x.IdPelicula == idPelicula);
+            var directorPelicula = await context.DirectorPeliculas.FirstOrDefaultAsync(x => x.Id == id);
 
             if (directorPelicula is null)
             {

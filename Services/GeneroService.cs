@@ -14,7 +14,7 @@ namespace TestApi.Services
         Task<IEnumerable<GeneroDto>> ObtenerGeneros();
         Task<GeneroDto> ObtenerGeneroPorId(int id);
         Task<GeneroPeliculaDto> AgregarGeneroPelicula(GeneroPeliculaDto generoPeliculaDto);
-        Task<bool> BorrarGeneroPelicula(int idGenero, int idPelicula);
+        Task<bool> BorrarGeneroPelicula(int id);
     }
 
     public class GeneroService : IGeneroService
@@ -79,9 +79,9 @@ namespace TestApi.Services
             return generoPeliculaDto;
         }
 
-        public async Task<bool> BorrarGeneroPelicula(int idGenero, int idPelicula)
+        public async Task<bool> BorrarGeneroPelicula(int id)
         {
-            var generoPelicula = await context.GeneroPeliculas.Where(x => x.IdGenero == idGenero).FirstOrDefaultAsync(x => x.IdPelicula == idPelicula);
+            var generoPelicula = await context.GeneroPeliculas.FirstOrDefaultAsync(x => x.Id == id);
 
             if (generoPelicula is null)
             {

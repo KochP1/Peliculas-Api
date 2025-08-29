@@ -77,12 +77,12 @@ namespace TestApi.Controllers
             }
         }
 
-        [HttpDelete("genero-pelicula/{idGenero:int}/{idPelicula:int}")]
-        public async Task<ActionResult> Delete(int idGenero, int idPelicula)
+        [HttpDelete("genero-pelicula/{id:int}/")]
+        public async Task<ActionResult> DeleteGeneroPelicula(int id)
         {
             try
             {
-                var result = await generoService.BorrarGeneroPelicula(idGenero, idPelicula);
+                var result = await generoService.BorrarGeneroPelicula(id);
 
                 if (!result)
                 {

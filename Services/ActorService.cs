@@ -13,7 +13,7 @@ namespace TestApi.Services
         Task<ActorDto> CrearActor(CrearActorDto crearActorDto);
         Task<IEnumerable<ActorDto>> ObtenerActores();
         Task<ActorConPeliculasDto> ObtenerActorPorId(int id);
-        Task<bool> BorrarActorPelicula(int idActor, int idPelicula);
+        Task<bool> BorrarActorPelicula(int id);
         Task<ActorPeliculaDto> AgregarActorPelicula(ActorPeliculaDto actorPeliculaDto);
     }
 
@@ -85,9 +85,9 @@ namespace TestApi.Services
             return actorPeliculaDto;
         }
 
-        public async Task<bool> BorrarActorPelicula(int idActor, int idPelicula)
+        public async Task<bool> BorrarActorPelicula(int id)
         {
-            var actorPelicula = await context.ActorPeliculas.Where(x => x.IdActor == idActor).FirstOrDefaultAsync(x => x.IdPelicula == idPelicula);
+            var actorPelicula = await context.ActorPeliculas.FirstOrDefaultAsync(x => x.Id == id);
 
             if (actorPelicula is null)
             {
