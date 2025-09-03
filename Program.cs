@@ -10,13 +10,13 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+var origenesPermitidos = builder.Configuration.GetSection("OrígenesPermitidos").Get<string[]>();
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("PermitirTodo", opcionesCors =>
     {
         // withOrigins(origenesPermitidos)
-        opcionesCors.AllowAnyOrigin()
+        opcionesCors.WithOrigins(origenesPermitidos!)
             .AllowAnyMethod()
             .AllowAnyHeader()
             .WithExposedHeaders("cantidad-total-registros");
