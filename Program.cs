@@ -11,6 +11,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("PermitirTodo", opcionesCors =>
+    {
+        // withOrigins(origenesPermitidos)
+        opcionesCors.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithExposedHeaders("cantidad-total-registros");
+    });
+});
+
+
 builder.Services.AddControllers().AddJsonOptions(opciones => opciones.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddScoped<IActorService, ActorService>();
